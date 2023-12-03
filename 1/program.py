@@ -20,13 +20,12 @@ def part_two(text):
     digits = [str(i) for i in range(10)]
 
     def find_all(search_str, target):
-        start = 0
-        while True:
-            start = search_str.find(target, start)
-            if start == -1:
-                return
-            yield start
-            start += len(target)
+        first = search_str.find(target)
+        if first:
+            yield first
+        last = search_str.rfind(target)
+        if last:
+            yield last
 
     for line in text:
         first, last = 2_147_483_647, -1
