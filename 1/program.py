@@ -53,10 +53,11 @@ def part_two(text):
     return total_calibration
 
 
-with open("input.txt", "r") as file:
-    answer_one = part_one(file)
+if __name__ == "__main__":
+    with open("input.txt", "r") as file:
+        answer_one = part_one(file)
 
-with open("input.txt", "r") as file:
-    answer_two = part_two(file)
+    with open("input.txt", "r") as file:
+        answer_two = part_two(file)
 
-print(f"One: {answer_one} \nTwo: {answer_two}")
+    print(f"One: {answer_one} \nTwo: {answer_two}")

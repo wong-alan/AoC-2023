@@ -1,7 +1,10 @@
 import re
 from functools import reduce
 
+from utils import timed
 
+
+@timed
 def part_one(text):
     game_id_sum = 0
     maximum = {
@@ -11,10 +14,10 @@ def part_one(text):
     }
     for line in text:
         impossible = False
-        parts = re.split(":|;|,", line)
+        parts = re.split(r"[:;,]", line)
 
         for cubes in parts[1:]:
-            num, color = cubes.strip(" \n").split(" ")
+            num, color = cubes.strip().split(" ")
             if int(num) > maximum[color]:
                 impossible = True
                 break
@@ -26,6 +29,7 @@ def part_one(text):
     return game_id_sum
 
 
+@timed
 def part_two(text):
     total_power = 0
     key = {
@@ -36,7 +40,7 @@ def part_two(text):
 
     for line in text:
         minimum = [1, 1, 1]  # red, green, blue
-        parts = re.split(":|;|,", line)
+        parts = re.split(r"[:;,]", line)
 
         for cubes in parts[1:]:
             num, color = cubes.strip(" \n").split(" ")
@@ -47,10 +51,11 @@ def part_two(text):
     return total_power
 
 
-with open("input.txt", "r") as file:
-    answer_one = part_one(file)
+if __name__ == "__main__":
+    with open("input.txt", "r") as file:
+        answer_one = part_one(file)
 
-with open("input.txt", "r") as file:
-    answer_two = part_two(file)
+    with open("input.txt", "r") as file:
+        answer_two = part_two(file)
 
-print(f"One: {answer_one} \nTwo: {answer_two}")
+    print(f"One: {answer_one} \nTwo: {answer_two}")
