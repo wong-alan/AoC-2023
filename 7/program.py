@@ -40,7 +40,7 @@ def part_one(text):
         power += hand_pwr[tuple(val_count[:2])]
         hands.append((power, int(bid)))
 
-    hands.sort(key=lambda hand: hand[0])
+    hands.sort()
     winnings = 0
     for index, hand in enumerate(hands):
         winnings += hand[1] * (index + 1)
@@ -90,7 +90,7 @@ def part_two(text):
 
         power += hand_pwr[tuple(val_count[:2])]
         hands.append((power, int(bid)))
-    hands.sort(key=lambda hand: hand[0])
+    hands.sort()
 
     winnings = 0
     for index, hand in enumerate(hands):
