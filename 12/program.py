@@ -11,6 +11,7 @@ def part_one(text: TextIO) -> int:
 
     def count_arrangements(symbols: str, groups: list[int]):
         if '?' in symbols:
+            # Brute force by replacing all '?' with '.' or '#' and checking final string
             return count_arrangements(symbols.replace('?', '.', 1), groups) + \
                 count_arrangements(symbols.replace('?', '#', 1), groups)
         else:
@@ -27,7 +28,7 @@ def part_one(text: TextIO) -> int:
 
 
 @timed
-def part_two(text: TextIO) -> int:
+def part_two(text: TextIO, copies: int) -> int:
     total_arrangements = 0
 
     @cache
@@ -65,8 +66,8 @@ def part_two(text: TextIO) -> int:
 
     for line in text:
         symbols, groups = line.split()
-        symbols = '?'.join(symbols for _ in range(5))
-        groups = ','.join(groups for _ in range(5))
+        symbols = '?'.join(symbols for _ in range(copies))
+        groups = ','.join(groups for _ in range(copies))
         groups = tuple(int(group) for group in groups.split(','))  # use a tuple for cache, since lists are not hashable
 
         total_arrangements += count_arrangements(symbols, groups)
@@ -75,9 +76,10 @@ def part_two(text: TextIO) -> int:
 
 if __name__ == "__main__":
     with open("input.txt", "r") as file:
-        answer_one = part_one(file)
+        # answer_one = part_one(file)
+        answer_one = part_two(file, 1)
 
     with open("input.txt", "r") as file:
-        answer_two = part_two(file)
+        answer_two = part_two(file, 5)
 
     print(f"One: {answer_one} \nTwo: {answer_two}")
