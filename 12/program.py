@@ -10,14 +10,13 @@ def part_one(text: TextIO) -> int:
     total_arrangements = 0
 
     def count_arrangements(symbols: str, groups: list[int]):
-        if '?' in groups:
+        if '?' in symbols:
             return count_arrangements(symbols.replace('?', '.', 1), groups) + \
                 count_arrangements(symbols.replace('?', '#', 1), groups)
         else:
             if groups == [len(group) for group in re.findall(r"#+", symbols)]:
                 return 1
             return 0
-        pass
 
     for line in text:
         symbols, groups = line.split()
