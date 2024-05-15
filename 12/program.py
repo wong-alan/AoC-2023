@@ -1,7 +1,9 @@
 import re
 from functools import cache
 from typing import TextIO
-
+import sys
+import os
+sys.path.append(os.path.abspath(".."))
 from utils import timed
 
 
