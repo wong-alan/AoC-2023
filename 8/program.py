@@ -1,9 +1,6 @@
 import math
 import re
 from itertools import cycle
-import sys
-import os
-sys.path.append(os.path.abspath(".."))
 from utils import timed
 
 

@@ -1,10 +1,7 @@
 import copy
-from typing import TextIO, Tuple, List
+from typing import TextIO, List
 from itertools import chain
 import operator
-import sys
-import os
-sys.path.append(os.path.abspath(".."))
 from utils import timed
 
 
@@ -44,22 +41,22 @@ def part_two(text: TextIO) -> int:
         platform.append(text_line)
 
     roll = {  # Rock roll direction
-        "N": (-1,  0), # Up
-        "W": ( 0, -1), # Left
-        "S": ( 1,  0), # Down
-        "E": ( 0,  1)  # Right
+        "N": (-1, 0),  # Up
+        "W": (0, -1),  # Left
+        "S": (1, 0),  # Down
+        "E": (0, 1)  # Right
     }
     order = {  # Rock traversal order
         # For [N, W] iterate forwards, ie top-down, left to right
         # For [S, E] iterate backwards, ie bottom-up, right to left
-        "N":  1, "W":  1,
+        "N": 1, "W": 1,
         "S": -1, "E": -1
     }
     axis = {  # 0 = row, 1 = col
         "N": 0, "W": 1,
         "S": 0, "E": 1
     }
-    edge = { # Platform is a square
+    edge = {  # Platform is a square
         "N": 0,
         "W": 0,
         "S": -(len(platform) - 1),
@@ -75,13 +72,13 @@ def part_two(text: TextIO) -> int:
         for rock in rocks[::order[direction]]:
             # N,W: rock > 0
             # S,E: rock < edge => -rock > -edge
-            while rock[roll_axis]*sign > limit \
+            while rock[roll_axis] * sign > limit \
                     and platform[rock[0] + row_dir][rock[1] + col_dir] == '.':
                 platform[rock[0] + row_dir][rock[1] + col_dir] = 'O'
                 platform[rock[0]][rock[1]] = '.'
                 rock[roll_axis] += -1 * sign
         # Rocks can change order
-        rocks.sort(key = operator.itemgetter(0, 1))
+        rocks.sort(key=operator.itemgetter(0, 1))
 
     # Keep a list to detect cycle
     platform_map = {stringify(platform): 0}
@@ -104,7 +101,7 @@ def part_two(text: TextIO) -> int:
             break
 
     # Calculate final platform state from cycle length
-    zero = loop_start - 1 # Assume cycle doesn't start at 0
+    zero = loop_start - 1  # Assume cycle doesn't start at 0
     cycle_length = loop_end - loop_start
     offset = (cycle_limit - zero) % cycle_length
     final_index = zero + offset if offset != 0 else zero + cycle_length
@@ -112,9 +109,11 @@ def part_two(text: TextIO) -> int:
 
     return sum(row.count("O") * (len(final_platform) - i) for i, row in enumerate(final_platform))
 
+
 # Lists are not hashable, so we need to convert the platform
 def stringify(platform: List[List[str]]):
     return "".join(chain.from_iterable(platform))
+
 
 if __name__ == "__main__":
     with open("input.txt", "r") as file:
